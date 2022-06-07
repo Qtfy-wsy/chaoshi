@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        			    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        			    http://www.springframework.org/schema/tx
+        			    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        			    http://www.springframework.org/schema/aop
+        			    http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        			    http://www.springframework.org/schema/util
+        			    http://www.springframework.org/schema/util/spring-util-3.1.xsd
+        			    http://www.springframework.org/schema/context
+        			    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        			    http://www.springframework.org/schema/task
+        			    http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/db_cgchaoshiyingxiao?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;serverTimezone=GMT"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>  
+				<prop key="hibernate.hbn2dd1.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			</props>
+		</property>
+		<property name="mappingLocations" value = "classpath:com/model/*.hbm.xml"></property>
+	</bean>
+
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<context:annotation-config />
+	<context:component-scan base-package="com" />
+	<!-- newFile的配置=========================================================== -->
+	<bean id="newFileAction" class="com.action.NewFileAction"
+		scope="prototype">
+	</bean>
+	<!-- login的配置=========================================================== -->
+	<bean id="loginAction" class="com.action.LoginAction"
+		scope="prototype">
+	</bean>
+	<!-- admin的配置=========================================================== -->
+	<bean id="adminDao" class="com.dao.AdminDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="adminService" class="com.service.AdminServiceImp">
+		<property name="adminDao" ref="adminDao" />
+	</bean>
+	<bean id="adminAction" class="com.action.AdminAction"
+		scope="prototype">
+		<property name="adminService" ref="adminService" />
+	</bean>
+	<!-- bumen的配置=========================================================== -->
+	<bean id="bumenDao" class="com.dao.BumenDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="bumenService" class="com.service.BumenServiceImp">
+		<property name="bumenDao" ref="bumenDao" />
+	</bean>
+	<bean id="bumenAction" class="com.action.BumenAction"
+		scope="prototype">
+		<property name="bumenService" ref="bumenService" />
+	</bean>
+	<!-- user的配置=========================================================== -->
+	<bean id="userDao" class="com.dao.UserDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userService" class="com.service.UserServiceImp">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="userAction" class="com.action.UserAction"
+		scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<!-- yhbumen的配置=========================================================== -->
+	<bean id="yhbumenDao" class="com.dao.YhbumenDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="yhbumenService" class="com.service.YhbumenServiceImp">
+		<property name="yhbumenDao" ref="yhbumenDao" />
+	</bean>
+	<bean id="yhbumenAction" class="com.action.YhbumenAction"
+		scope="prototype">
+		<property name="yhbumenService" ref="yhbumenService" />
+	</bean>
+	<!-- yhrole的配置=========================================================== -->
+	<bean id="yhroleDao" class="com.dao.YhroleDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="yhroleService" class="com.service.YhroleServiceImp">
+		<property name="yhroleDao" ref="yhroleDao" />
+	</bean>
+	<bean id="yhroleAction" class="com.action.YhroleAction"
+		scope="prototype">
+		<property name="yhroleService" ref="yhroleService" />
+	</bean>
+	<!-- yonghu的配置=========================================================== -->
+	<bean id="yonghuDao" class="com.dao.YonghuDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="yonghuService" class="com.service.YonghuServiceImp">
+		<property name="yonghuDao" ref="yonghuDao" />
+	</bean>
+	<bean id="yonghuAction" class="com.action.YonghuAction"
+		scope="prototype">
+		<property name="yonghuService" ref="yonghuService" />
+	</bean>
+	<!-- role的配置=========================================================== -->
+	<bean id="roleDao" class="com.dao.RoleDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="roleService" class="com.service.RoleServiceImp">
+		<property name="roleDao" ref="roleDao" />
+	</bean>
+	<bean id="roleAction" class="com.action.RoleAction"
+		scope="prototype">
+		<property name="roleService" ref="roleService" />
+	</bean>
+	<!-- ggtype的配置=========================================================== -->
+	<bean id="ggtypeDao" class="com.dao.GgtypeDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ggtypeService" class="com.service.GgtypeServiceImp">
+		<property name="ggtypeDao" ref="ggtypeDao" />
+	</bean>
+	<bean id="ggtypeAction" class="com.action.GgtypeAction"
+		scope="prototype">
+		<property name="ggtypeService" ref="ggtypeService" />
+	</bean>
+	<!-- gonggao的配置=========================================================== -->
+	<bean id="gonggaoDao" class="com.dao.GonggaoDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="gonggaoService" class="com.service.GonggaoServiceImp">
+		<property name="gonggaoDao" ref="gonggaoDao" />
+	</bean>
+	<bean id="gonggaoAction" class="com.action.GonggaoAction"
+		scope="prototype">
+		<property name="gonggaoService" ref="gonggaoService" />
+	</bean>
+	<!-- uxtype的配置=========================================================== -->
+	<bean id="uxtypeDao" class="com.dao.UxtypeDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="uxtypeService" class="com.service.UxtypeServiceImp">
+		<property name="uxtypeDao" ref="uxtypeDao" />
+	</bean>
+	<bean id="uxtypeAction" class="com.action.UxtypeAction"
+		scope="prototype">
+		<property name="uxtypeService" ref="uxtypeService" />
+	</bean>
+	<!-- uxinxi的配置=========================================================== -->
+	<bean id="uxinxiDao" class="com.dao.UxinxiDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="uxinxiService" class="com.service.UxinxiServiceImp">
+		<property name="uxinxiDao" ref="uxinxiDao" />
+	</bean>
+	<bean id="uxinxiAction" class="com.action.UxinxiAction"
+		scope="prototype">
+		<property name="uxinxiService" ref="uxinxiService" />
+	</bean>
+	<!-- yxtype的配置=========================================================== -->
+	<bean id="yxtypeDao" class="com.dao.YxtypeDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="yxtypeService" class="com.service.YxtypeServiceImp">
+		<property name="yxtypeDao" ref="yxtypeDao" />
+	</bean>
+	<bean id="yxtypeAction" class="com.action.YxtypeAction"
+		scope="prototype">
+		<property name="yxtypeService" ref="yxtypeService" />
+	</bean>
+	<!-- yxinxi的配置=========================================================== -->
+	<bean id="yxinxiDao" class="com.dao.YxinxiDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="yxinxiService" class="com.service.YxinxiServiceImp">
+		<property name="yxinxiDao" ref="yxinxiDao" />
+	</bean>
+	<bean id="yxinxiAction" class="com.action.YxinxiAction"
+		scope="prototype">
+		<property name="yxinxiService" ref="yxinxiService" />
+	</bean>
+	<!-- shangpin的配置=========================================================== -->
+	<bean id="shangpinDao" class="com.dao.ShangpinDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="shangpinService" class="com.service.ShangpinServiceImp">
+		<property name="shangpinDao" ref="shangpinDao" />
+	</bean>
+	<bean id="shangpinAction" class="com.action.ShangpinAction"
+		scope="prototype">
+		<property name="shangpinService" ref="shangpinService" />
+	</bean>
+	<!-- spcangku的配置=========================================================== -->
+	<bean id="spcangkuDao" class="com.dao.SpcangkuDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="spcangkuService" class="com.service.SpcangkuServiceImp">
+		<property name="spcangkuDao" ref="spcangkuDao" />
+	</bean>
+	<bean id="spcangkuAction" class="com.action.SpcangkuAction"
+		scope="prototype">
+		<property name="spcangkuService" ref="spcangkuService" />
+	</bean>
+	<!-- spchu的配置=========================================================== -->
+	<bean id="spchuDao" class="com.dao.SpchuDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="spchuService" class="com.service.SpchuServiceImp">
+		<property name="spchuDao" ref="spchuDao" />
+	</bean>
+	<bean id="spchuAction" class="com.action.SpchuAction"
+		scope="prototype">
+		<property name="spchuService" ref="spchuService" />
+	</bean>
+	<!-- spgys的配置=========================================================== -->
+	<bean id="spgysDao" class="com.dao.SpgysDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="spgysService" class="com.service.SpgysServiceImp">
+		<property name="spgysDao" ref="spgysDao" />
+	</bean>
+	<bean id="spgysAction" class="com.action.SpgysAction"
+		scope="prototype">
+		<property name="spgysService" ref="spgysService" />
+	</bean>
+	<!-- spjin的配置=========================================================== -->
+	<bean id="spjinDao" class="com.dao.SpjinDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="spjinService" class="com.service.SpjinServiceImp">
+		<property name="spjinDao" ref="spjinDao" />
+	</bean>
+	<bean id="spjinAction" class="com.action.SpjinAction"
+		scope="prototype">
+		<property name="spjinService" ref="spjinService" />
+	</bean>
+	<!-- sptype的配置=========================================================== -->
+	<bean id="sptypeDao" class="com.dao.SptypeDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sptypeService" class="com.service.SptypeServiceImp">
+		<property name="sptypeDao" ref="sptypeDao" />
+	</bean>
+	<bean id="sptypeAction" class="com.action.SptypeAction"
+		scope="prototype">
+		<property name="sptypeService" ref="sptypeService" />
+	</bean>
+</beans>

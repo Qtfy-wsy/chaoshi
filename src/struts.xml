@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<package name="default" extends="struts-default" namespace="/">
+		<action name="downFile" class="newFileAction" method="downFile">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream;charset=utf-8</param>
+				<!-- inputName 流对象名 —— 比如这里写inputStream，它就会自动去找Action中的getInputStream方法。 -->
+				<param name="inputName">inputStream</param>
+				<!-- contentDisposition 使用经过转码的文件名作为下载文件名 —— 默认格式是attachment;filename="${fileName}"，将调用该Action中的getFileName方法。 -->
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+				<!-- bufferSize 下载文件的缓冲大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		<!-- 配置action当与spring整合,class=bean的名称（如果bean没有指定value，则首写字母要小写）） -->
+		<action name="login" class="loginAction" method="loginUser">
+			<result name="admin">adminMain.jsp</result>
+			<result name="库管">kuguanMain.jsp</result>
+			<result name="采购">caigouMain.jsp</result>
+			<result name="销售">xiaoshouMain.jsp</result>
+			<result name="财务">caiwuMain.jsp</result>
+			<result name="yonghu">yonghuMain.jsp</result>
+			<result name="error">index.jsp</result>
+		</action>
+		<!-- 配置admin -->
+		<action name="mimaAdmin" class="adminAction" method="mimaAdmin">
+		</action>
+		<!-- 配置bumen -->
+		<action name="getBumens" class="bumenAction" method="getBumens">
+		</action>
+		<action name="deleteBumen" class="bumenAction" method="deleteBumen">
+		</action>
+		<action name="addBumen" class="bumenAction" method="addBumen">
+		</action>
+		<action name="bumenComboList" class="bumenAction" method="bumenComboList">
+		</action>
+		<!-- 配置user -->
+		<action name="getUsers" class="userAction" method="getUsers">
+		</action>
+		<action name="deleteUser" class="userAction" method="deleteUser">
+		</action>
+		<action name="addUser" class="userAction" method="addUser">
+		</action>
+		<action name="userComboList" class="userAction" method="userComboList">
+		</action>
+		<action name="daoruUser" class="userAction" method="daoruUser">
+		</action>
+		<action name="daochuUser" class="userAction" method="daochuUser">
+		</action>
+		<action name="shangchuanUser" class="userAction" method="shangchuanUser">
+		</action>
+		<action name="mimaUser" class="userAction" method="mimaUser">
+		</action>
+		<action name="userTongji" class="userAction" method="userTongji">
+		</action>
+		<action name="zhuceUser" class="userAction" method="zhuceUser">
+		</action>
+		<!-- 配置yhbumen -->
+		<action name="getYhbumens" class="yhbumenAction" method="getYhbumens">
+		</action>
+		<action name="deleteYhbumen" class="yhbumenAction" method="deleteYhbumen">
+		</action>
+		<action name="addYhbumen" class="yhbumenAction" method="addYhbumen">
+		</action>
+		<action name="yhbumenComboList" class="yhbumenAction" method="yhbumenComboList">
+		</action>
+		<!-- 配置yhrole -->
+		<action name="getYhroles" class="yhroleAction" method="getYhroles">
+		</action>
+		<action name="deleteYhrole" class="yhroleAction" method="deleteYhrole">
+		</action>
+		<action name="addYhrole" class="yhroleAction" method="addYhrole">
+		</action>
+		<action name="yhroleComboList" class="yhroleAction" method="yhroleComboList">
+		</action>
+		<!-- 配置yonghu -->
+		<action name="getYonghus" class="yonghuAction" method="getYonghus">
+		</action>
+		<action name="deleteYonghu" class="yonghuAction" method="deleteYonghu">
+		</action>
+		<action name="addYonghu" class="yonghuAction" method="addYonghu">
+		</action>
+		<action name="yonghuComboList" class="yonghuAction" method="yonghuComboList">
+		</action>
+		<action name="daoruYonghu" class="yonghuAction" method="daoruYonghu">
+		</action>
+		<action name="daochuYonghu" class="yonghuAction" method="daochuYonghu">
+		</action>
+		<action name="shangchuanYonghu" class="yonghuAction" method="shangchuanYonghu">
+		</action>
+		<action name="mimaYonghu" class="yonghuAction" method="mimaYonghu">
+		</action>
+		<action name="yonghuTongji" class="yonghuAction" method="yonghuTongji">
+		</action>
+		<action name="zhuceYonghu" class="yonghuAction" method="zhuceYonghu">
+		</action>
+		<!-- 配置role -->
+		<action name="getRoles" class="roleAction" method="getRoles">
+		</action>
+		<action name="deleteRole" class="roleAction" method="deleteRole">
+		</action>
+		<action name="addRole" class="roleAction" method="addRole">
+		</action>
+		<action name="roleComboList" class="roleAction" method="roleComboList">
+		</action>
+		<!-- 配置ggtypeAction -->	
+		<action name="getGgtypes" class="ggtypeAction" method="getGgtypes" >
+		</action>
+		<action name="deleteGgtype" class="ggtypeAction" method="deleteGgtype" >
+		</action>
+		<action name="addGgtype" class="ggtypeAction" method="addGgtype" >
+		</action>
+		<action name="ggtypeComboList" class="ggtypeAction" method="ggtypeComboList" >
+		</action>
+		<!-- 配置gonggaoAction -->	
+		<action name="getGonggaos" class="gonggaoAction" method="getGonggaos" >
+		</action>
+		<action name="shangchuanGonggao" class="gonggaoAction" method="shangchuanGonggao" >
+		</action>
+		<action name="deleteGonggao" class="gonggaoAction" method="deleteGonggao" >
+		</action>
+		<action name="addGonggao" class="gonggaoAction" method="addGonggao" >
+		</action>
+		<action name="gonggaoComboList" class="gonggaoAction" method="gonggaoComboList" >
+		</action>
+		<action name="neirongGonggao" class="gonggaoAction" method="neirongGonggao" >
+		</action>
+		<!-- 配置uxtypeAction -->	
+		<action name="getUxtypes" class="uxtypeAction" method="getUxtypes" >
+		</action>
+		<action name="deleteUxtype" class="uxtypeAction" method="deleteUxtype" >
+		</action>
+		<action name="addUxtype" class="uxtypeAction" method="addUxtype" >
+		</action>
+		<action name="uxtypeComboList" class="uxtypeAction" method="uxtypeComboList" >
+		</action>
+		<!-- 配置uxinxiAction -->	
+		<action name="getUxinxis" class="uxinxiAction" method="getUxinxis" >
+		</action>
+		<action name="shangchuanUxinxi" class="uxinxiAction" method="shangchuanUxinxi" >
+		</action>
+		<action name="deleteUxinxi" class="uxinxiAction" method="deleteUxinxi" >
+		</action>
+		<action name="addUxinxi" class="uxinxiAction" method="addUxinxi" >
+		</action>
+		<action name="uxinxiComboList" class="uxinxiAction" method="uxinxiComboList" >
+		</action>
+		<!-- 配置yxtypeAction -->	
+		<action name="getYxtypes" class="yxtypeAction" method="getYxtypes" >
+		</action>
+		<action name="deleteYxtype" class="yxtypeAction" method="deleteYxtype" >
+		</action>
+		<action name="addYxtype" class="yxtypeAction" method="addYxtype" >
+		</action>
+		<action name="yxtypeComboList" class="yxtypeAction" method="yxtypeComboList" >
+		</action>
+		<!-- 配置yxinxiAction -->	
+		<action name="getYxinxis" class="yxinxiAction" method="getYxinxis" >
+		</action>
+		<action name="shangchuanYxinxi" class="yxinxiAction" method="shangchuanYxinxi" >
+		</action>
+		<action name="deleteYxinxi" class="yxinxiAction" method="deleteYxinxi" >
+		</action>
+		<action name="addYxinxi" class="yxinxiAction" method="addYxinxi" >
+		</action>
+		<action name="yxinxiComboList" class="yxinxiAction" method="yxinxiComboList" >
+		</action>
+		<!-- 配置shangpin -->
+		<action name="getShangpins" class="shangpinAction" method="getShangpins">
+		</action>
+		<action name="deleteShangpin" class="shangpinAction" method="deleteShangpin">
+		</action>
+		<action name="addShangpin" class="shangpinAction" method="addShangpin">
+		</action>
+		<action name="shangpinComboList" class="shangpinAction" method="shangpinComboList">
+		</action>
+		<action name="daoruShangpin" class="shangpinAction" method="daoruShangpin">
+		</action>
+		<action name="daochuShangpin" class="shangpinAction" method="daochuShangpin">
+		</action>
+		<action name="shangchuanShangpin" class="shangpinAction" method="shangchuanShangpin">
+		</action>
+		<action name="shangpinTongji" class="shangpinAction" method="shangpinTongji">
+		</action>
+		<action name="caigouTongji" class="shangpinAction" method="caigouTongji">
+		</action>
+		<action name="xiaoshouTongji" class="shangpinAction" method="xiaoshouTongji">
+		</action>
+		<!-- 配置spcangku -->
+		<action name="getSpcangkus" class="spcangkuAction" method="getSpcangkus">
+		</action>
+		<action name="deleteSpcangku" class="spcangkuAction" method="deleteSpcangku">
+		</action>
+		<action name="addSpcangku" class="spcangkuAction" method="addSpcangku">
+		</action>
+		<action name="spcangkuComboList" class="spcangkuAction" method="spcangkuComboList">
+		</action>
+		<action name="daoruSpcangku" class="spcangkuAction" method="daoruSpcangku">
+		</action>
+		<action name="daochuSpcangku" class="spcangkuAction" method="daochuSpcangku">
+		</action>
+		<action name="shangchuanSpcangku" class="spcangkuAction" method="shangchuanSpcangku">
+		</action>
+		<action name="spcangkuTongji" class="spcangkuAction" method="spcangkuTongji">
+		</action>
+		<!-- 配置spchu -->
+		<action name="getSpchus" class="spchuAction" method="getSpchus">
+		</action>
+		<action name="deleteSpchu" class="spchuAction" method="deleteSpchu">
+		</action>
+		<action name="addSpchu" class="spchuAction" method="addSpchu">
+		</action>
+		<action name="spchuComboList" class="spchuAction" method="spchuComboList">
+		</action>
+		<action name="daoruSpchu" class="spchuAction" method="daoruSpchu">
+		</action>
+		<action name="daochuSpchu" class="spchuAction" method="daochuSpchu">
+		</action>
+		<action name="shangchuanSpchu" class="spchuAction" method="shangchuanSpchu">
+		</action>
+		<action name="spchuTongji" class="spchuAction" method="spchuTongji">
+		</action>
+		<!-- 配置spgys -->
+		<action name="getSpgyss" class="spgysAction" method="getSpgyss">
+		</action>
+		<action name="deleteSpgys" class="spgysAction" method="deleteSpgys">
+		</action>
+		<action name="addSpgys" class="spgysAction" method="addSpgys">
+		</action>
+		<action name="spgysComboList" class="spgysAction" method="spgysComboList">
+		</action>
+		<action name="daoruSpgys" class="spgysAction" method="daoruSpgys">
+		</action>
+		<action name="daochuSpgys" class="spgysAction" method="daochuSpgys">
+		</action>
+		<action name="shangchuanSpgys" class="spgysAction" method="shangchuanSpgys">
+		</action>
+		<action name="spgysTongji" class="spgysAction" method="spgysTongji">
+		</action>
+		<!-- 配置spjin -->
+		<action name="getSpjins" class="spjinAction" method="getSpjins">
+		</action>
+		<action name="deleteSpjin" class="spjinAction" method="deleteSpjin">
+		</action>
+		<action name="addSpjin" class="spjinAction" method="addSpjin">
+		</action>
+		<action name="spjinComboList" class="spjinAction" method="spjinComboList">
+		</action>
+		<action name="daoruSpjin" class="spjinAction" method="daoruSpjin">
+		</action>
+		<action name="daochuSpjin" class="spjinAction" method="daochuSpjin">
+		</action>
+		<action name="shangchuanSpjin" class="spjinAction" method="shangchuanSpjin">
+		</action>
+		<action name="spjinTongji" class="spjinAction" method="spjinTongji">
+		</action>
+		<!-- 配置sptype -->
+		<action name="getSptypes" class="sptypeAction" method="getSptypes">
+		</action>
+		<action name="deleteSptype" class="sptypeAction" method="deleteSptype">
+		</action>
+		<action name="addSptype" class="sptypeAction" method="addSptype">
+		</action>
+		<action name="sptypeComboList" class="sptypeAction" method="sptypeComboList">
+		</action>
+		<action name="daoruSptype" class="sptypeAction" method="daoruSptype">
+		</action>
+		<action name="daochuSptype" class="sptypeAction" method="daochuSptype">
+		</action>
+		<action name="shangchuanSptype" class="sptypeAction" method="shangchuanSptype">
+		</action>
+		<action name="sptypeTongji" class="sptypeAction" method="sptypeTongji">
+		</action>
+
+	</package>
+	<constant name="struts.action.excludePattern" value="/static/.*?" />
+	<constant name="struts.action.excludePattern" value="/static/.*?" />
+</struts>  
